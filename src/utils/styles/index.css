@@ -1,0 +1,19 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.page{
+    min-width: 100%;
+    min-height: 100vh;
+}
+
+.section{
+    width: 100%;
+    min-height: 50vh;
+}
+
+.top-section{
+    background-image: url(https://picsum.photos/1920/1080);
+    min-height: 90vh;
+}
