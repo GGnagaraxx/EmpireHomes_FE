@@ -35,7 +35,7 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.EnvironmentPlugin(dotenv.parsed),
+        new webpack.EnvironmentPlugin(dotenv.parsed ? dotenv.parsed : {}),
         new NodePolyfillPlugin(),
     ],
     

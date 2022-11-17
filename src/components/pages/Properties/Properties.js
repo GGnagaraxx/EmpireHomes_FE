@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Box, Collapse, Grid, Stack } from "@mui/material";
+import { Box, Collapse, Grid, Stack, TextField } from "@mui/material";
 import PageHeader from "../../../common/components/PageHeader";
 import header_image from '../../../utils/images/header_image.jpg'
 import PropertyPagination from "./components/PropertyPagination";
+import { pureFinalPropsSelectorFactory } from "react-redux/es/connect/selectorFactory";
 
 const styles = {
     header: {
@@ -18,8 +19,19 @@ const styles = {
 function Properties() {
 
     const [ openFilter, setOpenFilter ] = useState(false);
+    const [ openSort, setOpenSort ] = useState(false);
     const [ filters, setFilters ] = useState({});
-    const [ sortDetails, setSortDetails ] = useState(false);
+    const [ sortDetails, setSortDetails ] = useState({});
+
+    function handleFilterClick(){
+        setOpenFilter(!openFilter);
+        setOpenSort(false);
+    }
+
+    function handleSortClick(){
+        setOpenSort(!openSort);
+        setOpenFilter(false);
+    }
 
     return (
         <Box className='page-content'>
@@ -32,7 +44,7 @@ function Properties() {
             <Stack spacing={2}>
                 <Grid container>
                     <Grid item xs={12}>
-
+                        <TextField id="outlined-basic" label="Search" variant="outlined"/>
                     </Grid>
                     <Collapse
                         in={openFilter}
