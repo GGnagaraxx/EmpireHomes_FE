@@ -3,14 +3,14 @@ import { Box } from "@mui/material";
 
 
 
-function SellerGuide(){
+function BuyerGuide(){
 
     return(
         <Box className='page-content'>
-            SellerGuide
+            BuyerGuide
         </Box>
     )
 }
 
 
-export default SellerGuide;
+export default BuyerGuide;

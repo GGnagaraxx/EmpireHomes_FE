@@ -1,4 +1,7 @@
 const path = require('path');
+const webpack = require('webpack');
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+const dotenv = require('dotenv').config({path: __dirname + '/.env'});
 
 module.exports = {
     output: {
@@ -29,5 +32,16 @@ module.exports = {
                 type: 'asset/resource',
             },
         ]
+    },
+
+    plugins: [
+        new webpack.EnvironmentPlugin(dotenv.parsed),
+        new NodePolyfillPlugin(),
+    ],
+    
+    resolve: {
+        fallback: {
+            "fs": false
+        },
     }
 };

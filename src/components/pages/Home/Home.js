@@ -1,15 +1,19 @@
-import React, { useState } from "react";
-import { Box, Card, CardContent, CardMedia, Grid, Stack, Typography } from "@mui/material";
+import React from "react";
+import { Box } from "@mui/material";
 import TopSection from "./components/TopSection";
-import { propertyData } from "../../../utils/sampleData";
-import PropertyCard from "../../../common/components/PropertyCard";
+import PropTypeSection from "./components/PropTypeSection";
+import BlogSection from "./components/BlogSection";
+import ContactUsSection from "../../../common/components/ContactUsSection";
 
 function Home() {
 
 
     return (
-        <Box className="home-page">
+        <Box className="home-page page-content">
             <TopSection />
+            <PropTypeSection />
+            <BlogSection />
+            <ContactUsSection />
         </Box>
 
     )

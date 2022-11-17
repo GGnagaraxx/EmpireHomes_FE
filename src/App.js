@@ -6,32 +6,30 @@ import { Provider } from 'react-redux';
 import store from './common/redux/store';
 
 const custTheme = createTheme({
-    palette: {
-        mode: 'light',
-        primary: {
-          main: '#fbc02d',
-        },
-        secondary: {
-          main: '#ffa726',
-        },
-      },
-      text: {
-        secondary: 'rgba(26,26,26,0.54)',
-        disabled: 'rgba(47,47,47,0.38)',
-      },
+  palette: {
+    primary: {
+      main: '#f9a825',
+    },
+    secondary: {
+      main: '#fb8c00',
+    },
+    text: {
+      primary: '#000000',
+      secondary: 'rgba(26,26,26,0.54)',
+      disabled: 'rgba(47,47,47,0.38)',
+    },
+  },
 });
 
 function App() {
-    return (
-        <Provider store={store}>
-            <ThemeProvider theme={custTheme}>
-                <CssBaseline/>
-                <div className='page'>
-                    <AppRouter />
-                </div>
-            </ThemeProvider>
-        </Provider>
-    )
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={custTheme}>
+        <CssBaseline />
+          <AppRouter />
+      </ThemeProvider>
+    </Provider>
+  )
 }
 
 export default App;

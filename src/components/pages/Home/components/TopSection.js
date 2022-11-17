@@ -10,16 +10,22 @@ function TopSection() {
                 alignItems: 'center'
             }}
         >
-            <Grid container>
+            <Grid 
+                container
+                sx={{
+                    height:'500px',
+                    mb: 2
+                }}
+            >
                 <Grid
                     item
                     xs={12} md={8} lg={6}
                     sx={{
-                        p: 5,
+                        p: 4,
                         pt: 20,
                         display: 'flex',
                         justifyContent: 'center',
-                        flexDirection: 'column'
+                        flexDirection: 'column',
                     }}
                 >
                     <Typography gutterBottom variant='h2' sx={{ color: 'white' }}>
@@ -34,7 +40,7 @@ function TopSection() {
             <Box
                 sx={{
                     width: '80%',
-                    height: '100px',
+                    height: '150px',
                     display: { xs: 'none', md: 'flex' },
                     backgroundColor: '#fbc02d',
                     borderRadius: '30px'
