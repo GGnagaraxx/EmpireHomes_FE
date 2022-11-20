@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Box, CircularProgress, Grid, Pagination, Stack } from "@mui/material";
-import { filterList, partitionList, sortList } from "../../../../common/functions/listFunctions";
+import { partitionList, sortList } from "../../../../common/functions/listFunctions";
 import { propertyData } from "../../../../utils/sampleData";
 import PropertyCard from "../../../../common/components/cards/PropertyCard";
+import _ from "lodash";
 
 const styles = {
     paginationBox: {
@@ -11,11 +12,13 @@ const styles = {
         alignItems: 'center',
     },
     spinner: {
-        height: '100%',
-        width: '100%',
+        minHeight: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    gridContainer: {
+        minHeight: 500
     },
     gridItem: {
         p: 3,
@@ -27,22 +30,24 @@ const styles = {
 
 function PropertyPagination(props) {
 
-    const { filter, sortDetail, filterOpen } = props;
+    const { filter, sortDetails, filterOpen } = props;
 
     const [propertyList, setPropertyList] = useState([]);
     const [currPage, setCurrPage] = useState(1);
 
     useEffect(() => {
         updatePropertyList();
-    }, [])
+    }, [sortDetails, filter])
 
     function updatePropertyList() {
-        let propList = filterList(propertyData, filterFunction);
-        console.log("Filtered: ", propList);
-        propList = sortList(propertyData, sortDetail);
-        console.log("Sorted: ", propList);
+        let propList = _.compact(propertyData.map(filterFunction))
+        console.log("===========================================");
+        console.log("filtered: ", propertyData.map(filterFunction));
+        console.log("compact: ", propList);
+        propList = sortList(propList, sortDetails);
+        console.log("sorted: ", propList);
         propList = partitionList(propList, 12);
-        console.log("Partitioned: ", propList);
+        console.log("partitioned: ", propList);
 
         setPropertyList(propList);
     }
@@ -52,21 +57,25 @@ function PropertyPagination(props) {
 
         for (const key in filter) {
             if (!filter[key]) continue;
-            if (key == 'maxPrice' && !(o[key] < filter[key])) {
-                valid = false;
-                break;
+            if (key == 'maxPrice') {
+                if(o[key] > parseInt(filter[key])){
+                    valid = false;
+                    break;
+                }
 
-            } else if (key == 'minPrice' && !(o[key] > filter[key])) {
-                valid = false;
-                break;
+            } else if (key == 'minPrice') {
+                if(o[key] < parseInt(filter[key])){
+                    valid = false;
+                    break;
+                }
 
-            } else if (!o[key] == filter[key]) {
+            } else if (o[key] != filter[key]) {
                 valid = false;
                 break;
             }
         }
-
-        return valid;
+        
+        if(valid) return o;
     }
 
     function handlePageChange(e, page) {
@@ -83,8 +92,7 @@ function PropertyPagination(props) {
                     variant="outlined" color='primary'/>
             </Box>
 
-            <Grid container>
-                {console.log(propertyList.length, propertyList[currPage - 1])}
+            <Grid container sx={styles.gridContainer}>
                 {propertyList.length ?
                     propertyList[currPage - 1].map((property) => {
                         return (
@@ -98,9 +106,9 @@ function PropertyPagination(props) {
                             </Grid>
                         )
                     }) : 
-                    <Box sx={styles.spinner}>
+                    <Grid item xs={12} sx={styles.spinner}>
                         <CircularProgress color="primary" />
-                    </Box>        
+                    </Grid>        
                 }
             </Grid>
 

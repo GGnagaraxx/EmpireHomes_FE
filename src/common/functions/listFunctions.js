@@ -11,8 +11,10 @@ function sortList(list, sortDetails){
     let orderDirection = [];
 
     for(const key in sortDetails){
-        orderByArr.push(key);
-        orderDirection.push(sortDetails[key]);
+        if(sortDetails[key]){
+            orderByArr.push(key);
+            orderDirection.push(sortDetails[key]);
+        }
     }
 
     const sortedList = _.orderBy(list, orderByArr, orderDirection);

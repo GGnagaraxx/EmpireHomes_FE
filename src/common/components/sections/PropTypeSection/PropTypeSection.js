@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
-import CategoryCarousel from "../sub_components/PropTypeSection/CategoryCarousel";
-import PropsCarousel from "../sub_components/PropTypeSection/PropsCarousel";
-import SectionHeader from "../../../../common/components/SectionHeader";
+import CategoryCarousel from "./components/CategoryCarousel";
+import PropsCarousel from "./components/PropsCarousel";
+import SectionHeader from "../../SectionHeader";
 import { Link } from "react-router-dom";
 
 
@@ -25,11 +25,14 @@ function PropTypeSection() {
         <Box className="section" sx={{ p: 5 }}>
             <Link to='/properties' style={{textDecoration: 'none'}}>
                 <SectionHeader
-                    title='Top Priorities'
+                    title='Top Properties'
                     subtitle="Take a look at Empire Home's most demanded properties in the Philippines!"
                     buttonProps={{
                         label: 'View All Properties',
-                        variant: 'contained'
+                        variant: 'contained',
+                        sx: {
+                            color: 'white'
+                        }
                     }}
                 />
             </Link>

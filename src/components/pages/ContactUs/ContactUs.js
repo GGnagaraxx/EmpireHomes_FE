@@ -1,9 +1,9 @@
 import React from "react";
 import { Box } from "@mui/material";
-import ContactUsSection from "../../../common/components/ContactUsSection";
-import FaqsSection from "./components/FaqsSection";
+import ContactUsSection from "../../../common/components/sections/ContactUsSection";
 import PageHeader from "../../../common/components/PageHeader";
 import header_image from '../../../utils/images/header_image.jpg'
+import FaqsSection from "../../../common/components/sections/FaqsSection";
 
 const styles = { 
     header: {

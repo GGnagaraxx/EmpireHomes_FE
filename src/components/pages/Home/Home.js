@@ -1,9 +1,9 @@
 import React from "react";
 import { Box } from "@mui/material";
 import TopSection from "./components/TopSection";
-import PropTypeSection from "./components/PropTypeSection";
+import PropTypeSection from "../../../common/components/sections/PropTypeSection/PropTypeSection";
 import BlogSection from "./components/BlogSection";
-import ContactUsSection from "../../../common/components/ContactUsSection";
+import ContactUsSection from "../../../common/components/sections/ContactUsSection";
 
 function Home() {
 

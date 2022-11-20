@@ -1,8 +1,8 @@
 import { Box, Grid } from "@mui/material";
 import React from "react";
-import Contacts from "./Contacts";
-import ContactUsForm from "./forms/ContactUsForm"
-import SectionHeader from "./SectionHeader";
+import Contacts from "../Contacts";
+import ContactUsForm from "../forms/ContactUsForm"
+import SectionHeader from "../SectionHeader";
 
 function ContactUsSection(props) {
 

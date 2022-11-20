@@ -9,9 +9,13 @@ const custTheme = createTheme({
   palette: {
     primary: {
       main: '#f9a825',
+      light: 'primary',
     },
     secondary: {
       main: '#fb8c00',
+    },
+    warning: {
+      main: '#ffffff',
     },
     text: {
       primary: '#000000',

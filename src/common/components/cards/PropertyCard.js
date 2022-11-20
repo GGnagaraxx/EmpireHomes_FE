@@ -53,7 +53,7 @@ function PropertyCard(props) {
     const { propData, showProgress, withDesc } = props;
 
     return (
-        <Link to={'properties/' + propData.id} style={{ textDecoration: 'none' }}>
+        <Link to={'/properties/' + propData.id} style={{ textDecoration: 'none' }}>
             <Card sx={styles.card}>
                 <Box
                     className='prop-card-media'
@@ -70,14 +70,14 @@ function PropertyCard(props) {
                             <>
                                 <Box
                                     className="progress-highlight"
-                                    sx={{ ...styles.progressBar, height: propData.progress }}
+                                    sx={{ ...styles.progressBar, height: propData.progress.toString() + '%' }}
                                 />
                                 <Typography
                                     className="progress-percent"
                                     variant='h4'
                                     sx={styles.progressTxt}
                                 >
-                                    {propData.progress}
+                                    {propData.progress.toString() + '%'}
                                 </Typography>
                             </> : null
                     }

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Button, Grid, TextField } from "@mui/material";
 import { Form } from "react-bootstrap";
-import PrivacyCheckBox from "../custom_fields/PrivacyCheckBox";
-import SelectEnqType from "../custom_fields/SelectEnqType";
 import { send } from "@emailjs/browser";
-import { ContactNumValidation, EmailValidation, NameValidation } from "../../functions/validator";
+import { ContactNumValidation, EmailValidation, IdValidation, NameValidation } from "../../../../common/functions/validator";
+import PropertySearchField from "../../../../common/components/custom_fields/PropertySearchField";
+import PrivacyCheckBox from "../../../../common/components/custom_fields/PrivacyCheckBox";
 
 
-function ContactUsForm() {
+function ReservationForm() {
 
     const [formInput, setFormInput] = useState({
-        enqType: 'Other Concerns',
+        property: '',
         firstName: '',
         lastName: '',
         email: '',
@@ -18,11 +18,11 @@ function ContactUsForm() {
         country: '',
         province: '',
         city: '',
-        message: '',
+        idNumber: '',
         privacyPolicy: false,
     })
     const [inputError, setInputError] = useState({
-        enqType: false,
+        property: false,
         firstName: false,
         lastName: false,
         email: false,
@@ -30,7 +30,7 @@ function ContactUsForm() {
         country: false,
         province: false,
         city: false,
-        message: false,
+        idNumber: false,
         privacyPolicy: false,
     })
 
@@ -41,7 +41,7 @@ function ContactUsForm() {
 
     function initStates(){
         setFormInput({
-            enqType: 'Other Concerns',
+            
             firstName: '',
             lastName: '',
             email: '',
@@ -49,11 +49,10 @@ function ContactUsForm() {
             country: '',
             province: '',
             city: '',
-            message: '',
+            idNumber: '',
             privacyPolicy: false,
         })
         setInputError({
-            enqType: false,
             firstName: false,
             lastName: false,
             email: false,
@@ -61,7 +60,7 @@ function ContactUsForm() {
             country: false,
             province: false,
             city: false,
-            message: false,
+            idNumber: false,
             privacyPolicy: false,
         })
     }
@@ -70,12 +69,15 @@ function ContactUsForm() {
         return new Promise((resolve, reject) => {
             let resp = {}
             if (inputType == "firstName" || inputType == "lastName" ||
-                inputType == "city" || inputType == "province" || inputType == "country") {
+                inputType == "city" || inputType == "province" || 
+                inputType == "country" || inputType == "property") {
                 resp = NameValidation(input);
             } else if (inputType == "email") {
                 resp = EmailValidation(input);
             } else if (inputType == "contactNum") {
                 resp = ContactNumValidation(input);
+            } else if (inputType == "idNumber") {
+                resp = IdValidation(input);
             } else if (inputType == "privacyPolicy") {
                 resp.err = !input;
             }
@@ -107,6 +109,13 @@ function ContactUsForm() {
         }
     }
 
+    function handleSearchChange(e, val) {
+        setFormInput({
+            ...formInput,
+            property: val
+        });
+    }
+
     async function handleSubmit(e) {
 
         e.preventDefault();
@@ -127,6 +136,7 @@ function ContactUsForm() {
             let resp = await send(process.env.EJS_KEY, process.env.EJS_TEMPLATE_KEY, formInput, process.env.EJS_PUBLIC_KEY);  
             //Notify Success  
             console.log(resp);
+            console.log("handle close reservation modal")
             initStates();
         } catch (err){
             //Notify Error
@@ -144,14 +154,12 @@ function ContactUsForm() {
             <Form onSubmit={handleSubmit}>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
-                        <SelectEnqType
-                            value={formInput.enqType}
-                            label='How can we help you?'
-                            helperText={inputError.enqType}
-                            onChange={handleChange}
-                        />
+                        <PropertySearchField 
+                            required
+                            handleSearchChange={handleSearchChange}
+                            sx={{ width: '100%' }}/>
                     </Grid>
-                    <Grid item xs={12} sm={6} lg={6}>
+                    <Grid item xs={12} lg={6}>
                         <TextField
                             required
                             name='firstName'
@@ -160,10 +168,10 @@ function ContactUsForm() {
                             onChange={handleChange}
                             error={inputError.firstName ? true : false}
                             helperText={inputError.firstName ? inputError.firstName : ''}
-                            sx={{ width: '100%' }}
+                            sx={{ width: '100%', color: 'white' }}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6} lg={6}>
+                    <Grid item xs={12} lg={6}>
                         <TextField
                             required
                             name='lastName'
@@ -237,20 +245,14 @@ function ContactUsForm() {
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
-                            id="outlined-name"
-                            name="message"
-                            label="Message"
-                            placeholder="Type your message here."
-                            multiline
-                            inputProps={{ maxLength: 500 }}
-                            minRows={5}
-                            maxRows={5}
                             required
-                            sx={{ width: '100%' }}
-                            error={inputError.message ? true : false}
-                            helperText={inputError.message ? inputError.message : ''}
-                            value={formInput.message}
+                            name='idNumber'
+                            label='Valid ID Number'
+                            value={formInput.idNumber}
                             onChange={handleChange}
+                            error={inputError.idNumber ? true : false}
+                            helperText={inputError.idNumber ? inputError.idNumber : ''}
+                            sx={{ width: '100%' }}
                         />
                     </Grid>
                     <Grid
@@ -288,4 +290,4 @@ function ContactUsForm() {
 }
 
 
-export default ContactUsForm;
+export default ReservationForm;

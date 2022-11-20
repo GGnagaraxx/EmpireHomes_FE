@@ -1,7 +1,8 @@
 const patterns = {
     name: /^[a-zA-Z]{3,}([" "][a-zA-Z]{3,})*$/,
     email: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    contactNum: /^[0-9]{10}/,
+    contactNum: /^[0-9]{10}$/,
+    validId: /^[0-9]{12}$/,
 }
 
 const constants = {
@@ -64,6 +65,23 @@ function ContactNumValidation(num){
     return retVal;
 }
 
+function IdValidation(idNumber, required){
+    let retVal = {
+        valid: false,
+        err: false,
+    }
+
+    if((idNumber==null || !idNumber.trim().length) && required){
+        retVal.err = 'Field is required';
+    } else if(patterns.validId.test(idNumber.trim())){
+        retVal.valid = true;
+    } else {
+        retVal.err = 'Invalid ID number';
+    }
+
+    return retVal;
+}
+
 function DoBValidation(dob){
     let retVal = {
         valid: false,
@@ -116,6 +134,7 @@ export {
     ContactNumValidation,
     DoBValidation,
     
+    IdValidation,
     InqTypeValidation,
 
     IsInputEmpty,

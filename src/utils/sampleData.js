@@ -8,7 +8,7 @@ const propertyData = [
         demands: 12,
         location: 'Sample Location City',
         img: 'https://picsum.photos/320/520',
-        progress: '95%',
+        progress: 95,
         desc: 'Laborum est quis adipisicing voluptate sunt velit minim reprehenderit eiusmod tempor ex laborum laborum. Mollit sint et Lorem ut enim qui enim non in deserunt tempor. Ex anim tempor minim ullamco in quis dolore dolor dolore in id eiusmod labore exercitation.'
     },
     {
@@ -20,7 +20,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 10,
         img: 'https://picsum.photos/320/520',
-        progress: '75%',
+        progress: 75,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
     {
@@ -32,7 +32,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 15,
         img: 'https://picsum.photos/320/520',
-        progress: '85%',
+        progress: 85,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
     {
@@ -44,7 +44,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 12,
         img: 'https://picsum.photos/320/520',
-        progress: '50%',
+        progress: 50,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
     {
@@ -56,7 +56,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 12,
         img: 'https://picsum.photos/320/520',
-        progress: '45%',
+        progress: 45,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
     {
@@ -68,7 +68,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 12,
         img: 'https://picsum.photos/320/520',
-        progress: '20%',
+        progress: 20,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
     {
@@ -80,7 +80,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 17,
         img: 'https://picsum.photos/320/520',
-        progress: '30%',
+        progress: 30,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
     {
@@ -92,8 +92,8 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 20,
         img: 'https://picsum.photos/320/520',
-        progress: '10%',
-        desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
+        progress: 10,
+        desc: 'Laboris do nisi consequat eiusmod occaecat proident adipisicing esse. Elit velit duis proident reprehenderit qui veniam anim minim cillum officia eiusmod proident. Magna magna ullamco esse do officia dolor occaecat.'
     },
     {
         id: 9,
@@ -104,7 +104,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 2,
         img: 'https://picsum.photos/320/520',
-        progress: '75%',
+        progress: 75,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
     {
@@ -116,7 +116,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 20,
         img: 'https://picsum.photos/320/520',
-        progress: '90%',
+        progress: 90,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
     {
@@ -128,7 +128,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 12,
         img: 'https://picsum.photos/320/520',
-        progress: '35%',
+        progress: 35,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
     {
@@ -140,7 +140,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 12,
         img: 'https://picsum.photos/320/520',
-        progress: '55%',
+        progress: 55,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
     {
@@ -152,7 +152,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 12,
         img: 'https://picsum.photos/320/520',
-        progress: '80%',
+        progress: 80,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
     {
@@ -164,7 +164,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 12,
         img: 'https://picsum.photos/320/520',
-        progress: '17%',
+        progress: 17,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
     {
@@ -176,7 +176,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 12,
         img: 'https://picsum.photos/320/520',
-        progress: '60%',
+        progress: 60,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
     {
@@ -188,7 +188,7 @@ const propertyData = [
         maxPrice: 10000000,
         demands: 12,
         img: 'https://picsum.photos/320/520',
-        progress: '70%',
+        progress: 70,
         desc: 'Aliqua aliquip non culpa cillum exercitation ad.'
     },
 

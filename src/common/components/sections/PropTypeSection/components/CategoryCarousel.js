@@ -1,6 +1,6 @@
 import React from "react";
 import { Chip } from "@mui/material";
-import CardCarousel from "../../../../../common/components/CardCarousel";
+import CardCarousel from "../../../CardCarousel";
 import { propertyTypes } from "../../../../../utils/sampleData";
 
 function CategoryCarousel(props) {
