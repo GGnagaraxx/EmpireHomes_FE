@@ -1,16 +1,25 @@
 import { configureStore } from "@reduxjs/toolkit";
-import sampleReducer from "./slices/sampleSlice";
-// import { sampleApi } from "./apiSlices/sampleApiSlice";
+import modalReducer from "./slices/modalSlice";
+import notifReducer from "./slices/notifSlice";
+import propertyApi from "./apiSlices/propertyApiSlice";
+import blogApi from "./apiSlices/blogApiSlice";
+import applicationApi from "./apiSlices/applicationApiSlice";
 
 
 const store = configureStore({
     reducer: {
-        sample: sampleReducer,
-        // [sampleApi.path]: sampleApi.reducer
+        modal: modalReducer,
+        notif: notifReducer,
+        [propertyApi.reducerPath]: propertyApi.reducer,
+        [blogApi.reducerPath]: blogApi.reducer,
+        [applicationApi.reducerPath]: applicationApi.reducer,
     },
-    // middleware: (getDefaultMiddleware) => {
-    //     return getDefaultMiddleware().concat(sampleApi.middleware)
-    // }
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware()
+        .concat(propertyApi.middleware)
+        .concat(blogApi.middleware)
+        .concat(applicationApi.middleware)
+    }
 })
 
 export default store;

@@ -8,7 +8,7 @@ import PropertySearchField from "../../../../common/components/custom_fields/Pro
 
 function SearchHeader(props) {
     
-    const { openFilter, openSort, handleFilterClick, handleSortClick, handleFilterChange } = props;
+    const { filter, openFilter, openSort, handleFilterClick, handleSortClick, handleFilterChange } = props;
 
     return ( 
         <Box sx={{ 
@@ -55,7 +55,10 @@ function SearchHeader(props) {
                 }}
             />
             <PropertySearchField 
-                handleSearchChange={handleFilterChange} color='secondary'/>
+                value={filter.name}
+                handleSearchChange={handleFilterChange} 
+                color='secondary'
+                />
 
         </Box>
     );

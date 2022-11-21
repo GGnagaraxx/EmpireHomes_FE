@@ -2,20 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Box, Grid } from "@mui/material";
 import SectionHeader from "../../../../common/components/SectionHeader";
 import BlogCard from "../../../../common/components/cards/BlogCard";
-import { blogData } from "../../../../utils/sampleData";
+// import { blogData } from "../../../../utils/sampleData";
 import { partitionList, sortListByDate } from "../../../../common/functions/listFunctions";
+import { useGetBlogListQuery } from "../../../../common/redux/apiSlices/blogApiSlice";
 
 
 function BlogSection() {
 
+    const blogData = useGetBlogListQuery();
     const [blogMap, setBlogMap] = useState([]);
 
     useEffect(() => {
-        let newList = sortListByDate(blogData, {date: 'desc'});
-        newList = partitionList(newList, 7)[0];
-
-        setBlogMap(initBlogMap(newList))
-    }, [])
+        if(blogData.data){
+            const data = [...blogData.data];
+            let newList = sortListByDate(data, {date: 'desc'});
+            newList = partitionList(newList, 7)[0];
+    
+            setBlogMap(initBlogMap(newList))
+        }
+    }, [blogData])
 
     function initBlogMap(blogList) {
         return blogList.map((blog, index) => {

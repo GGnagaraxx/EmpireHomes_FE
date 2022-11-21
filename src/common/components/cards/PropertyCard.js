@@ -62,7 +62,7 @@ function PropertyCard(props) {
                     <CardMedia
                         component="img"
                         height="300"
-                        image={propData.img}
+                        image={propData.imageUrl}
                         alt={propData.name + ' image'}
                     />
                     {

@@ -13,6 +13,7 @@ import Property from "../pages/Property/Property";
 import ReservationModal from "./ReservationModal/ReservationModal";
 import JoinUsModal from "./JoinUsModal/JoinUsModal";
 import PrivacyPolicyModal from "./PrivacyPolicyModal/PrivacyPolicyModal";
+import Notification from "./Alert/Notification";
 
 
 function AppRouter() {
@@ -36,6 +37,7 @@ function AppRouter() {
             <JoinUsModal/>
             <ReservationModal/>
             <PrivacyPolicyModal/>
+            <Notification/>
         </BrowserRouter>
     )
 }

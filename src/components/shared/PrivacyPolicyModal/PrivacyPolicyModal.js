@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Card, Modal, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { changeModalState } from "../../../common/redux/slices/modalSlice";
 
 const styles = {
     modal: {
@@ -31,10 +33,11 @@ const styles = {
 
 function PrivacyPolicyModal() {
 
-    const [open, setOpen] = useState(false);
+    const open = useSelector((state) => state.modal.privacyModal);
+    const dispatch = useDispatch()
 
     function handleClose() {
-        setOpen(false);
+        dispatch(changeModalState('privacyModal'));
     }
 
     return (

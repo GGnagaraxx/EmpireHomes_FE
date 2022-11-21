@@ -2,11 +2,18 @@ import React, { useState } from "react";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import PrivacyCheckBox from "../../../../common/components/custom_fields/PrivacyCheckBox";
 import Bold from "../../../../common/components/Bold";
+import { useDispatch } from "react-redux";
+import { changeModalState } from "../../../../common/redux/slices/modalSlice";
+import { popNotification, pushNotification } from "../../../../common/redux/slices/notifSlice";
+import { usePostApplicationMutation } from "../../../../common/redux/apiSlices/applicationApiSlice";
 
 
 
 function ReviewAndSubmit(props) {
 
+    const dispatch = useDispatch();
+    const [saveApplication, result] = usePostApplicationMutation();
+    
     const { userInput, handleBack, resetFields } = props;
     const [ privacyChecked, setPrivacyChecked ] = useState(false);
     const [ privacyError, setPrivacyError ] = useState();
@@ -21,12 +28,20 @@ function ReviewAndSubmit(props) {
             setPrivacyError('Agreement with the privacy policy is required.');
         } else {
             resetFields();
-            console.log("close Join us modal.");
+            saveApplication({...userInput, contactNumber: userInput.contactNum});
+            dispatch(changeModalState('joinUsModal'));
+            dispatch(pushNotification({
+                type: 'success',
+                message: 'Application has been successfully submitted.'
+            }))
+            setTimeout(() => {
+                dispatch(popNotification());
+            }, 3000);
         }
     }
 
     function handleOpenPrivacyModal(){
-        console.log("Open privacy modal");
+        dispatch(changeModalState('privacyModal'));
     }
 
     return (

@@ -1,7 +1,9 @@
 import { Box, Card } from "@mui/material";
 import React from "react";
+import { useDispatch } from "react-redux";
 import Bold from "../../../../common/components/Bold";
 import SectionHeader from "../../../../common/components/SectionHeader";
+import { changeModalState } from "../../../../common/redux/slices/modalSlice";
 
 const styles = {
     headerBox: {
@@ -23,8 +25,10 @@ const styles = {
 
 function JoinUsSection() {
 
+    const dispatch = useDispatch();
+    
     function handleJoinClick(){
-        console.log('Open Join us modal');
+        dispatch(changeModalState('joinUsModal'));
     }
 
     return (

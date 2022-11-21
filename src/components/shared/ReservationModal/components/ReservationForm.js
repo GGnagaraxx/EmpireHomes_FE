@@ -5,10 +5,15 @@ import { send } from "@emailjs/browser";
 import { ContactNumValidation, EmailValidation, IdValidation, NameValidation } from "../../../../common/functions/validator";
 import PropertySearchField from "../../../../common/components/custom_fields/PropertySearchField";
 import PrivacyCheckBox from "../../../../common/components/custom_fields/PrivacyCheckBox";
+import { useDispatch } from "react-redux";
+import { changeModalState } from "../../../../common/redux/slices/modalSlice";
+import { popNotification, pushNotification } from "../../../../common/redux/slices/notifSlice";
 
 
 function ReservationForm() {
 
+    const dispatch = useDispatch();
+    
     const [formInput, setFormInput] = useState({
         property: '',
         firstName: '',
@@ -70,8 +75,12 @@ function ReservationForm() {
             let resp = {}
             if (inputType == "firstName" || inputType == "lastName" ||
                 inputType == "city" || inputType == "province" || 
-                inputType == "country" || inputType == "property") {
+                inputType == "country") {
                 resp = NameValidation(input);
+            } else if (inputType == "property"){
+                if(!input){
+                    resp.err = 'Property is required.'
+                }
             } else if (inputType == "email") {
                 resp = EmailValidation(input);
             } else if (inputType == "contactNum") {
@@ -127,6 +136,8 @@ function ReservationForm() {
             if (errCopy[key]) valid = false;
         }
 
+
+        console.log(valid, errCopy)
         if (!valid) {
             setInputError(errCopy);
             return;
@@ -135,18 +146,27 @@ function ReservationForm() {
         try{
             let resp = await send(process.env.EJS_KEY, process.env.EJS_TEMPLATE_KEY, formInput, process.env.EJS_PUBLIC_KEY);  
             //Notify Success  
-            console.log(resp);
-            console.log("handle close reservation modal")
+            dispatch(pushNotification({
+                type: 'success',
+                message: 'Reservation has been successfully submitted.'
+            }))
+            dispatch(changeModalState('reservationModal'));
             initStates();
+            setTimeout(() => {
+                dispatch(popNotification());
+            }, 3000);
         } catch (err){
             //Notify Error
-            console.log(err)
+            dispatch(pushNotification({
+                type: 'error',
+                message: err.message
+            }))
         }
 
     }
 
     function handleOpenPrivacyModal() {
-        console.log('Open Modal')
+        dispatch(changeModalState('privacyModal'));
     }
 
     return (

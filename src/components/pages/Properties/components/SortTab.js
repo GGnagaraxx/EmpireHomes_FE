@@ -9,12 +9,12 @@ import { Chip } from "@mui/material";
 function SortTab(props) {
 
     const { sortDetails, handleSortChange } = props;
-    const sortableProps = ['name', 'minPrice', 'maxPrice', 'demands', 'progress']
+    const sortableProps = ['name', 'minPrice', 'maxPrice', 'demand', 'progress']
     const [sortIcons, setSortIcons] = useState({
         name: <SortIcon />,
         minPrice: <SortIcon />,
         maxPrice: <SortIcon />,
-        demands: <SortIcon />,
+        demand: <SortIcon />,
         progress: <SortIcon />,
     });
 

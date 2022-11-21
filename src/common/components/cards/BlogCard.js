@@ -65,7 +65,7 @@ function BlogCard(props) {
                 >
                     <CardMedia
                         component="img"
-                        image={blogData.img}
+                        image={blogData.imgUrl}
                         alt={blogData.title + ' image'}
                         sx={{ height: highlight ? "100%" : "300" }}
                     />

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Card, Modal, Typography } from "@mui/material";
 import JoinUsForm from "./components/JoinUsForm";
+import { useDispatch, useSelector } from "react-redux";
+import { changeModalState } from "../../../common/redux/slices/modalSlice";
 
 const styles = {
     modal: {
@@ -25,10 +27,11 @@ const styles = {
 
 function JoinUsModal() {
 
-    const [ open, setOpen ] = useState(false);
+    const open = useSelector((state) => state.modal.joinUsModal);
+    const dispatch = useDispatch();
 
     function handleClose() {
-        setOpen(false);
+        dispatch(changeModalState('joinUsModal'))
     }
 
     return ( 

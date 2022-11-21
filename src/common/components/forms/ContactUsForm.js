@@ -5,9 +5,14 @@ import PrivacyCheckBox from "../custom_fields/PrivacyCheckBox";
 import SelectEnqType from "../custom_fields/SelectEnqType";
 import { send } from "@emailjs/browser";
 import { ContactNumValidation, EmailValidation, NameValidation } from "../../functions/validator";
+import { useDispatch } from "react-redux";
+import { changeModalState } from "../../redux/slices/modalSlice";
+import { popNotification, pushNotification } from "../../redux/slices/notifSlice";
 
 
 function ContactUsForm() {
+
+    const dispatch = useDispatch();
 
     const [formInput, setFormInput] = useState({
         enqType: 'Other Concerns',
@@ -92,6 +97,7 @@ function ContactUsForm() {
     function handleChange(e) {
         const name = e.target.name
 
+        console.log(name, e.target.name)
         if (name == 'privacyPolicy') {
             setFormInput({
                 ...formInput,
@@ -126,17 +132,26 @@ function ContactUsForm() {
         try{
             let resp = await send(process.env.EJS_KEY, process.env.EJS_TEMPLATE_KEY, formInput, process.env.EJS_PUBLIC_KEY);  
             //Notify Success  
-            console.log(resp);
+            dispatch(pushNotification({
+                type: 'success',
+                message: 'Inquiry has been sent successfully.'
+            }))
             initStates();
+            setTimeout(() => {
+                dispatch(popNotification());
+            }, 3000);
         } catch (err){
             //Notify Error
-            console.log(err)
+            dispatch(pushNotification({
+                type: 'error',
+                message: err.message
+            }))
         }
 
     }
 
     function handleOpenPrivacyModal() {
-        console.log('Open Modal')
+        dispatch(changeModalState('privacyModal'))
     }
 
     return (

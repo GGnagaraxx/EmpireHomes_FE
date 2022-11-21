@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Autocomplete, Stack, TextField } from "@mui/material";
 import _ from "lodash";
 import { propertyData, propertyTypes } from "../../../../utils/sampleData";
+import { useGetPropertyListQuery } from "../../../../common/redux/apiSlices/propertyApiSlice";
 
 
 function FilterTab(props) {
 
     const { filters, handleFilterChange } = props;
+    const { status, data } = useGetPropertyListQuery();
 
-    const categoryOptions = propertyTypes.map((type) => type.type)
-    const locationOptions = _.uniqBy(propertyData, 'location').map((prop) => prop.location)
+    const [ locationOptions, setLocationOptions ] = useState([]);
+    const [ categoryOptions, setCategoryOptions ] = useState([]);
+
+    useEffect(() => {
+        if(status == "fulfilled"){
+            setLocationOptions(_.uniqBy(data, 'location').map((prop) => prop.location));
+            setCategoryOptions(_.uniqBy(data, 'type').map((prop) => prop.type))
+        }
+    }, [status])
 
     return (
         <Stack spacing={2} sx={{ p: 5, pb: 0 }}>

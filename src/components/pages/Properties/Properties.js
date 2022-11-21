@@ -31,6 +31,7 @@ function Properties() {
     const [openFilter, setOpenFilter] = useState(false);
     const [openSort, setOpenSort] = useState(false);
     const [filters, setFilters] = useState({
+        name: '',
         type: '',
         minPrice: 0,
         maxPrice: '',
@@ -40,7 +41,7 @@ function Properties() {
         name: null,
         minPrice: null,
         maxPrice: null,
-        demands: null,
+        demand: null,
         progress: null,
     });
 
@@ -98,6 +99,7 @@ function Properties() {
             </Box>
             <Stack spacing={2} sx={{ mb: 5 }}>
                 <SearchHeader
+                    filter={filters}
                     openFilter={openFilter}
                     openSort={openSort}
                     handleFilterClick={handleFilterClick}
@@ -117,7 +119,10 @@ function Properties() {
                         item
                         xs={12} sm={openFilter || openSort ? 6 : 12} md={openFilter || openSort ? 8 : 12} lg={openFilter || openSort ? 9 : 12}
                     >
-                        <PropertyPagination sortDetails={sortDetails} filter={filters} filterOpen={openFilter || openSort} />
+                        <PropertyPagination 
+                            sortDetails={sortDetails} 
+                            filter={filters} 
+                            filterOpen={openFilter || openSort} />
                     </Grid>
                 </Grid>
             </Stack>

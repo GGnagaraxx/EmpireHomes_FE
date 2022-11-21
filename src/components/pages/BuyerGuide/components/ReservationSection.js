@@ -2,6 +2,8 @@ import React from "react";
 import { Box, Button, Card, Stack } from "@mui/material";
 import SectionHeader from "../../../../common/components/SectionHeader";
 import PropTypeSection from "../../../../common/components/sections/PropTypeSection/PropTypeSection";
+import { useDispatch } from "react-redux";
+import { changeModalState } from "../../../../common/redux/slices/modalSlice";
 
 const styles = {
     headerBox: {
@@ -17,8 +19,10 @@ const styles = {
 
 function ReservationSection() {
 
+    const dispatch = useDispatch();
+
     function handleReservationClick(e) {
-        console.log('Open Reservation Modal')
+        dispatch(changeModalState('reservationModal'));
     }
 
     return (

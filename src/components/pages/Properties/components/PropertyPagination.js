@@ -4,6 +4,7 @@ import { partitionList, sortList } from "../../../../common/functions/listFuncti
 import { propertyData } from "../../../../utils/sampleData";
 import PropertyCard from "../../../../common/components/cards/PropertyCard";
 import _ from "lodash";
+import { useGetPropertyListQuery } from "../../../../common/redux/apiSlices/propertyApiSlice";
 
 const styles = {
     paginationBox: {
@@ -32,22 +33,20 @@ function PropertyPagination(props) {
 
     const { filter, sortDetails, filterOpen } = props;
 
+    const { status, data } = useGetPropertyListQuery();
     const [propertyList, setPropertyList] = useState([]);
     const [currPage, setCurrPage] = useState(1);
 
     useEffect(() => {
-        updatePropertyList();
-    }, [sortDetails, filter])
+        if(status == "fulfilled"){
+            updatePropertyList(data);
+        }
+    }, [sortDetails, filter, data])
 
-    function updatePropertyList() {
+    function updatePropertyList(propertyData) {
         let propList = _.compact(propertyData.map(filterFunction))
-        console.log("===========================================");
-        console.log("filtered: ", propertyData.map(filterFunction));
-        console.log("compact: ", propList);
         propList = sortList(propList, sortDetails);
-        console.log("sorted: ", propList);
         propList = partitionList(propList, 12);
-        console.log("partitioned: ", propList);
 
         setPropertyList(propList);
     }
@@ -91,7 +90,6 @@ function PropertyPagination(props) {
                     page={currPage}
                     variant="outlined" color='primary'/>
             </Box>
-
             <Grid container sx={styles.gridContainer}>
                 {propertyList.length ?
                     propertyList[currPage - 1].map((property) => {
