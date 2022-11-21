@@ -13,7 +13,6 @@ function PropsCarousel(props) {
     const [propsMap, setPropsMap] = useState([]);
 
     useEffect(() => {
-        console.log(data);
         if(status == "fulfilled"){
             const initList = getTopList(data, 10, { demand: 'desc' });
             setPropsMap(updatePropsMap(initList));

@@ -97,7 +97,6 @@ function ContactUsForm() {
     function handleChange(e) {
         const name = e.target.name
 
-        console.log(name, e.target.name)
         if (name == 'privacyPolicy') {
             setFormInput({
                 ...formInput,

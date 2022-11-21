@@ -10,7 +10,6 @@ export const modalSlice = createSlice({
     reducers: {
         changeModalState: (state, { payload }) => {
             const key = payload;
-            console.log(key, state[key]);
             return {
                 ...state,
                 [key]: !state[key]

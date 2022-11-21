@@ -137,7 +137,6 @@ function ReservationForm() {
         }
 
 
-        console.log(valid, errCopy)
         if (!valid) {
             setInputError(errCopy);
             return;

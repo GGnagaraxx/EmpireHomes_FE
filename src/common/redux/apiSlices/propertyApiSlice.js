@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const propertyApiSlice = createApi({
     reducerPath: 'propertyApiSlice',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://localhost:7096/',
+        baseUrl: process.env.API_BASE,
     }),
 
     endpoints: (builder) => ({
@@ -13,7 +13,6 @@ export const propertyApiSlice = createApi({
         }),
         getProperty: builder.query({
             query: (id) => {
-                console.log(id);
                 return `api/property/${id}/`
             }
         }),
