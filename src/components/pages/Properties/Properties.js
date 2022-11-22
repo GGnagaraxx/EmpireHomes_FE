@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Chip, Collapse, Grid, Stack, TextField } from "@mui/material";
 import PageHeader from "../../../common/components/PageHeader";
 import header_image from '../../../utils/images/header_image.jpg'
@@ -6,6 +6,7 @@ import PropertyPagination from "./components/PropertyPagination";
 import FilterTab from "./components/FilterTab";
 import SortTab from "./components/SortTab";
 import SearchHeader from "./components/SearchHeader";
+import { useSelector } from "react-redux";
 
 const styles = {
     header: {
@@ -28,6 +29,7 @@ const styles = {
 
 function Properties() {
 
+    const info = useSelector(state => state.globalSearch);
     const [openFilter, setOpenFilter] = useState(false);
     const [openSort, setOpenSort] = useState(false);
     const [filters, setFilters] = useState({
@@ -44,6 +46,21 @@ function Properties() {
         demand: null,
         progress: null,
     });
+
+    useEffect(() => {
+        if(info.type || info.location){
+            const globalType = info.type ? info.type : filters.type;
+            const globalLoc = info.location ? info.location : filters.location;
+    
+            setOpenFilter(true);
+            setFilters({
+                ...filters,
+                type: globalType,
+                location: globalLoc
+            })
+        }
+
+    }, [info])
 
     function handleFilterClick() {
         setOpenFilter(!openFilter);

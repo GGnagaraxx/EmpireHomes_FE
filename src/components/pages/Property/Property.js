@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Button, Card, getListItemSecondaryActionClassesUtilityClass, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, getListItemSecondaryActionClassesUtilityClass, Grid, Stack, Typography } from "@mui/material";
 import LikeIcon from '@mui/icons-material/FavoriteBorder';
 import ProgressIcon from '@mui/icons-material/HourglassTop';
 import ApartmentIcon from '@mui/icons-material/Apartment';
@@ -10,6 +10,7 @@ import Bold from "../../../common/components/Bold";
 import { useDispatch } from "react-redux";
 import { changeModalState } from "../../../common/redux/slices/modalSlice";
 import { useGetPropertyQuery } from "../../../common/redux/apiSlices/propertyApiSlice";
+import { changeGlobalFields } from "../../../common/redux/slices/globalSearchSlice";
 
 const styles = {
     pageContent: {
@@ -22,16 +23,38 @@ const styles = {
         backgroundPosition: 'right bottom',
         backgroundRepeat: 'no-repeat',
     },
-    card: {
+    stack: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    headCard: {
         px: '5%',
-        py: 5,
-        mb: 10,
+        pb: 2,
+        pt: 5,
+        mb: 5,
         width: '80%',
         maxWidth: 800,
         borderRadius: '15px',
         boxShadow: '0px 0px 10px orange',
         backgroundColor: '#000000bb',
         color: 'white'
+    },
+    bodyCard: {
+        px: '5%',
+        py: 2,
+        mb: 5,
+        width: '80%',
+        borderRadius: '15px',
+        boxShadow: '0px 0px 10px orange',
+        backgroundColor: '#000000bb',
+        color: 'white'
+    },
+    gridItem: {
+        p: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     statsBox: {
         display: 'flex',
@@ -45,6 +68,11 @@ const styles = {
     },
     icons: {
         fontSize: 'large'
+    },
+    img: {
+        maxWidth: '100%',
+        maxHeight: '250px',
+        marginHeight: '2px',
     },
     button: {
         color: 'white',
@@ -71,11 +99,19 @@ function Property() {
     const dispatch = useDispatch();
     const params = useParams();
     const { status, data } = useGetPropertyQuery(params.id);
-    const [ propData, setPropData ] = useState({});
-    const [ mapLocation, setMapLocation ] = useState("");
+    const [propData, setPropData] = useState({
+        name: '',
+        type: '',
+        location: '',
+        demand: 0,
+        minPrice: 0,
+        maxPrice: 0,
+        description: ''
+    });
+    const [mapLocation, setMapLocation] = useState("");
 
     useEffect(() => {
-        if(status == "fulfilled"){
+        if (status == "fulfilled") {
             setPropData(data);
             setMapLocation(
                 data.location.replace(/" "/g, '%20')
@@ -84,6 +120,7 @@ function Property() {
     }, [status])
 
     function handleOpenModal() {
+        dispatch(changeGlobalFields({ modalProperty: propData.name }));
         dispatch(changeModalState('reservationModal'));
     }
 
@@ -94,47 +131,31 @@ function Property() {
                 ...styles.pageContent,
                 backgroundImage: `radial-gradient(rgba(0, 0, 0, 0.5), rgba(30, 30, 30, 0.5)), url(${propData.imageUrl})`
             }}>
-            <Card sx={styles.card}>
-                <Stack>
+            <Stack sx={styles.stack}>
+                <Card sx={styles.headCard}>
                     <PageHeader
                         title={propData.name}
                         subtitle={propData.location}
-                        color='white'
+                        color='orange'
+                        center
                     />
                     <Box sx={styles.statsBox}>
                         <Typography variant='body1' color='inherit' sx={styles.icons}>
-                            <LikeIcon /> {propData.demand}
+                            <Bold>{"Demands "}<LikeIcon /></Bold> {propData.demand}
                         </Typography>
+                        |
                         <Typography variant='body1' color='inherit' sx={styles.icons}>
-                            <ProgressIcon /> {propData.progress + '%'}
+                            <Bold>{"Progress "}<ProgressIcon /></Bold> {propData.progress + '%'}
                         </Typography>
+                        |
                         <Typography variant='body1' color='inherit' sx={styles.icons}>
-                            <ApartmentIcon /> {propData.type}
+                            <Bold>{"Category "}<ApartmentIcon /></Bold> {propData.type}
                         </Typography>
                     </Box>
                     <Box sx={styles.statsBox}>
                         <Typography variant='body1' color='inherit' sx={styles.icons}>
                             <SellIcon /> &#8369;{propData.minPrice + ' - '} &#8369;{propData.maxPrice}
                         </Typography>
-                    </Box>
-                    <Box sx={styles.descBox}>
-                        <Typography variant='h6' color='inherit'>
-                            {propData.description}
-                        </Typography>
-                        <Box sx={styles.mapBox}>
-                            <Typography gutterBottom variant='h6' color='inherit' sx={styles.icons}>
-                                <Bold>{propData.location}</Bold>
-                            </Typography>
-                            <div className="mapouter" style={styles.mapOuter}>
-                                <div className="gmap_canvas" style={styles.mapCanvas}>
-                                    <iframe
-                                        width="100%" height="500"
-                                        id="gmap_canvas"
-                                        src={`https://maps.google.com/maps?q=${mapLocation}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
-                                        frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" />
-                                </div>
-                            </div>
-                        </Box>
                     </Box>
                     <Box sx={styles.statsBox}>
                         <Button
@@ -144,8 +165,48 @@ function Property() {
                             RESERVE NOW
                         </Button>
                     </Box>
-                </Stack>
-            </Card>
+                </Card>
+                <Card sx={styles.bodyCard}>
+                    <Stack>
+                        <Box sx={styles.descBox}>
+                            <Grid container>
+                                <Grid item xs={12} lg={6} sx={styles.gridItem}>
+                                    <Typography variant='h6' color='inherit'>
+                                        {propData.description.slice(0, 300)}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12} lg={6} sx={styles.gridItem}>
+                                    <img
+                                        src={propData.imageUrl}
+                                        alt={propData.name}
+                                        style={styles.img}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sx={styles.gridItem}>
+                                    <Typography variant='h6' color='inherit'>
+                                        {propData.description.slice(300)}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                        <Box sx={styles.mapBox}>
+                            <Typography gutterBottom variant='h6' color='inherit' sx={styles.icons}>
+                                <Bold>{"Property Location: " + propData.location}</Bold>
+                            </Typography>
+                            <div className="mapouter" style={styles.mapOuter}>
+                                <div className="gmap_canvas" style={styles.mapCanvas}>
+                                    <iframe
+                                        width="100%" height="100%"
+                                        id="gmap_canvas"
+                                        src={`https://maps.google.com/maps?q=${mapLocation}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+                                        frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" />
+                                </div>
+                            </div>
+                        </Box>
+
+                    </Stack>
+                </Card>
+            </Stack>
         </Box>
     )
 }

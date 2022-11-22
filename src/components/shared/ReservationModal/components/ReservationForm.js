@@ -5,15 +5,17 @@ import { send } from "@emailjs/browser";
 import { ContactNumValidation, EmailValidation, IdValidation, NameValidation } from "../../../../common/functions/validator";
 import PropertySearchField from "../../../../common/components/custom_fields/PropertySearchField";
 import PrivacyCheckBox from "../../../../common/components/custom_fields/PrivacyCheckBox";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeModalState } from "../../../../common/redux/slices/modalSlice";
 import { popNotification, pushNotification } from "../../../../common/redux/slices/notifSlice";
+import { changeGlobalFields } from "../../../../common/redux/slices/globalSearchSlice";
 
 
 function ReservationForm() {
 
     const dispatch = useDispatch();
-    
+    const globalPropertyInput = useSelector(state => state.globalSearch.modalProperty);
+
     const [formInput, setFormInput] = useState({
         property: '',
         firstName: '',
@@ -43,6 +45,16 @@ function ReservationForm() {
         initStates();
     }, [])
 
+    useEffect(() => {
+        if(globalPropertyInput){
+            setFormInput({
+                ...formInput,
+                property: globalPropertyInput
+            });
+            
+            dispatch(changeGlobalFields({modalProperty: ''}));
+        }
+    }, [globalPropertyInput])
 
     function initStates(){
         setFormInput({
@@ -175,6 +187,7 @@ function ReservationForm() {
                     <Grid item xs={12}>
                         <PropertySearchField 
                             required
+                            value={formInput.property}
                             handleSearchChange={handleSearchChange}
                             sx={{ width: '100%' }}/>
                     </Grid>

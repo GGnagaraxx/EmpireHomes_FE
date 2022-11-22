@@ -1,5 +1,7 @@
 import React from "react";
 import { Box, Grid, Stack, Typography } from "@mui/material";
+import Bold from "../../../../common/components/Bold";
+import HomeSearch from "./HomeSearch";
 
 function TopSection() {
     return (
@@ -11,8 +13,7 @@ function TopSection() {
             }}
         >
             <Grid 
-                container
-                sx={{
+                container sx={{
                     height:'500px',
                     mb: 2
                 }}
@@ -29,25 +30,15 @@ function TopSection() {
                     }}
                 >
                     <Typography gutterBottom variant='h2' sx={{ color: 'white' }}>
-                        Consectetur incididunt Lorem commodo esse.
+                        Welcome to <br/><Bold> Empire Homes</Bold>
                     </Typography>
                     <Typography variant='h4' sx={{ color: 'white' }}>
-                        Dolore deserunt non exercitation laborum quis id reprehenderit
-                        non proident non adipisicing.
+                        
+                    The most awaited Real Estate Project of the Philippine government
                     </Typography>
                 </Grid>
             </Grid>
-            <Box
-                sx={{
-                    width: '80%',
-                    height: '150px',
-                    display: { xs: 'none', md: 'flex' },
-                    backgroundColor: '#fbc02d',
-                    borderRadius: '30px'
-                }}
-            >
-                
-            </Box>
+            <HomeSearch/>
         </Stack>
     )
 }

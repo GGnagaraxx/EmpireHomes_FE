@@ -1,5 +1,5 @@
 import React from 'react'
-import AppRouter from './components/shared/AppRouter'
+import AppRouter from './components/shared/AppRouter/AppRouter'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Provider } from 'react-redux';
