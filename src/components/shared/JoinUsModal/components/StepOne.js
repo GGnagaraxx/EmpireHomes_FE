@@ -3,6 +3,8 @@ import { Form } from "react-bootstrap";
 import { Button, Checkbox, FormControlLabel, Grid, TextField } from "@mui/material";
 import { ContactNumValidation, EmailValidation, IdValidation, NameValidation } from "../../../../common/functions/validator";
 import PrivacyCheckBox from "../../../../common/components/custom_fields/PrivacyCheckBox";
+import SelectState from "../../../../common/components/custom_fields/SelectState";
+import SelectCity from "../../../../common/components/custom_fields/SelectCity";
 
 
 function StepOne(props) {
@@ -89,6 +91,32 @@ function StepOne(props) {
         }
     }
 
+    function handleAutoCompleteChange(e, val) {
+        let id = e.target.id.split('-')[0];
+
+        if (val == "") {
+            if (id == "country") {
+                setFormInput({
+                    ...formInput,
+                    [id]: val,
+                    province: '',
+                    city: ''
+                })
+            } else if (id == "province") {
+                setFormInput({
+                    ...formInput,
+                    [id]: val,
+                    city: ''
+                })
+            }
+        } else {
+            setFormInput({
+                ...formInput,
+                [id]: val
+            })
+        }
+    }
+
     function handleCheckChange(e) {
         setFormInput({
             ...formInput,
@@ -171,28 +199,24 @@ function StepOne(props) {
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={6}>
-                    <TextField
+                    <SelectState
                         required
-                        name='province'
-                        label='Province'
                         value={formInput.province}
-                        onChange={handleChange}
-                        error={inputError.province ? true : false}
-                        helperText={inputError.province ? inputError.province : ''}
+                        country={"Philippines"}
+                        handleChange={handleAutoCompleteChange}
                         sx={{ width: '100%' }}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={6}>
-                    <TextField
-                        required
-                        name='city'
-                        label='City'
-                        value={formInput.city}
-                        onChange={handleChange}
-                        error={inputError.city ? true : false}
-                        helperText={inputError.city ? inputError.city : ''}
-                        sx={{ width: '100%' }}
-                    />
+                        <SelectCity
+                            required
+                            disabled={!Boolean(formInput.province)}
+                            value={formInput.city}
+                            state={formInput.province}
+                            country={"Philippines"}
+                            handleChange={handleAutoCompleteChange}
+                            sx={{ width: '100%' }}
+                        />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={6}>
                     <TextField

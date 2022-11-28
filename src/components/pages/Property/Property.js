@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Button, Card, getListItemSecondaryActionClassesUtilityClass, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CircularProgress, getListItemSecondaryActionClassesUtilityClass, Grid, Stack, Typography } from "@mui/material";
 import LikeIcon from '@mui/icons-material/FavoriteBorder';
 import ProgressIcon from '@mui/icons-material/HourglassTop';
 import ApartmentIcon from '@mui/icons-material/Apartment';
@@ -99,15 +99,7 @@ function Property() {
     const dispatch = useDispatch();
     const params = useParams();
     const { status, data } = useGetPropertyQuery(params.id);
-    const [propData, setPropData] = useState({
-        name: '',
-        type: '',
-        location: '',
-        demand: 0,
-        minPrice: 0,
-        maxPrice: 0,
-        description: ''
-    });
+    const [propData, setPropData] = useState();
     const [mapLocation, setMapLocation] = useState("");
 
     useEffect(() => {
@@ -129,84 +121,90 @@ function Property() {
             className='page-content'
             sx={{
                 ...styles.pageContent,
-                backgroundImage: `radial-gradient(rgba(0, 0, 0, 0.5), rgba(30, 30, 30, 0.5)), url(${propData.imageUrl})`
+                backgroundImage: propData ? `radial-gradient(rgba(0, 0, 0, 0.5), rgba(30, 30, 30, 0.5)), url(${propData.imageUrl})`
+                : 'radial-gradient(rgba(0, 0, 0, 0.5), rgba(30, 30, 30, 0.5))'
             }}>
-            <Stack sx={styles.stack}>
-                <Card sx={styles.headCard}>
-                    <PageHeader
-                        title={propData.name}
-                        subtitle={propData.location}
-                        color='orange'
-                        center
-                    />
-                    <Box sx={styles.statsBox}>
-                        <Typography variant='body1' color='inherit' sx={styles.icons}>
-                            <Bold>{"Demands "}<LikeIcon /></Bold> {propData.demand}
-                        </Typography>
-                        |
-                        <Typography variant='body1' color='inherit' sx={styles.icons}>
-                            <Bold>{"Progress "}<ProgressIcon /></Bold> {propData.progress + '%'}
-                        </Typography>
-                        |
-                        <Typography variant='body1' color='inherit' sx={styles.icons}>
-                            <Bold>{"Category "}<ApartmentIcon /></Bold> {propData.type}
-                        </Typography>
-                    </Box>
-                    <Box sx={styles.statsBox}>
-                        <Typography variant='body1' color='inherit' sx={styles.icons}>
-                            <SellIcon /> &#8369;{propData.minPrice + ' - '} &#8369;{propData.maxPrice}
-                        </Typography>
-                    </Box>
-                    <Box sx={styles.statsBox}>
-                        <Button
-                            variant='contained' color='primary'
-                            size='large' onClick={handleOpenModal}
-                            sx={styles.button}>
-                            RESERVE NOW
-                        </Button>
-                    </Box>
-                </Card>
-                <Card sx={styles.bodyCard}>
-                    <Stack>
-                        <Box sx={styles.descBox}>
-                            <Grid container>
-                                <Grid item xs={12} lg={6} sx={styles.gridItem}>
-                                    <Typography variant='h6' color='inherit'>
-                                        {propData.description.slice(0, 300)}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={12} lg={6} sx={styles.gridItem}>
-                                    <img
-                                        src={propData.imageUrl}
-                                        alt={propData.name}
-                                        style={styles.img}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sx={styles.gridItem}>
-                                    <Typography variant='h6' color='inherit'>
-                                        {propData.description.slice(300)}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                        <Box sx={styles.mapBox}>
-                            <Typography gutterBottom variant='h6' color='inherit' sx={styles.icons}>
-                                <Bold>{"Property Location: " + propData.location}</Bold>
+            {
+                propData ? 
+                <Stack sx={styles.stack}>
+                    <Card sx={styles.headCard}>
+                        <PageHeader
+                            title={propData.name}
+                            subtitle={propData.location}
+                            color='orange'
+                            center
+                        />
+                        <Box sx={styles.statsBox}>
+                            <Typography variant='body1' color='inherit' sx={styles.icons}>
+                                <Bold>{"Demands "}<LikeIcon /></Bold> {propData.demand}
                             </Typography>
-                            <div className="mapouter" style={styles.mapOuter}>
-                                <div className="gmap_canvas" style={styles.mapCanvas}>
-                                    <iframe
-                                        width="100%" height="100%"
-                                        id="gmap_canvas"
-                                        src={`https://maps.google.com/maps?q=${mapLocation}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
-                                        frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" />
-                                </div>
-                            </div>
+                            |
+                            <Typography variant='body1' color='inherit' sx={styles.icons}>
+                                <Bold>{"Progress "}<ProgressIcon /></Bold> {propData.progress + '%'}
+                            </Typography>
+                            |
+                            <Typography variant='body1' color='inherit' sx={styles.icons}>
+                                <Bold>{"Category "}<ApartmentIcon /></Bold> {propData.type}
+                            </Typography>
                         </Box>
+                        <Box sx={styles.statsBox}>
+                            <Typography variant='body1' color='inherit' sx={styles.icons}>
+                                <SellIcon /> &#8369;{propData.minPrice + ' - '} &#8369;{propData.maxPrice}
+                            </Typography>
+                        </Box>
+                        <Box sx={styles.statsBox}>
+                            <Button
+                                variant='contained' color='primary'
+                                size='large' onClick={handleOpenModal}
+                                sx={styles.button}>
+                                RESERVE NOW
+                            </Button>
+                        </Box>
+                    </Card>
+                    <Card sx={styles.bodyCard}>
+                        <Stack>
+                            <Box sx={styles.descBox}>
+                                <Grid container>
+                                    <Grid item xs={12} lg={6} sx={styles.gridItem}>
+                                        <Typography variant='h6' color='inherit'>
+                                            {propData.description.slice(0, 300)}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} lg={6} sx={styles.gridItem}>
+                                        <img
+                                            src={propData.imageUrl}
+                                            alt={propData.name}
+                                            style={styles.img}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sx={styles.gridItem}>
+                                        <Typography variant='h6' color='inherit'>
+                                            {propData.description.slice(300)}
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                            <Box sx={styles.mapBox}>
+                                <Typography gutterBottom variant='h6' color='inherit' sx={styles.icons}>
+                                    <Bold>{"Property Location: " + propData.location}</Bold>
+                                </Typography>
+                                <div className="mapouter" style={styles.mapOuter}>
+                                    <div className="gmap_canvas" style={styles.mapCanvas}>
+                                        <iframe
+                                            width="100%" height="100%"
+                                            id="gmap_canvas"
+                                            src={`https://maps.google.com/maps?q=${mapLocation}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+                                            frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" />
+                                    </div>
+                                </div>
+                            </Box>
 
-                    </Stack>
-                </Card>
-            </Stack>
+                        </Stack>
+                    </Card>
+                </Stack>
+                : 
+                <CircularProgress color="primary" />
+            }
         </Box>
     )
 }

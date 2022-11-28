@@ -10,7 +10,7 @@ function PropsCarousel(props) {
 
     const {status, data} = useGetPropertyListQuery();
     const { selectedCategory } = props;
-    const [propsMap, setPropsMap] = useState([]);
+    const [propsMap, setPropsMap] = useState();
 
     useEffect(() => {
         if(status == "fulfilled"){

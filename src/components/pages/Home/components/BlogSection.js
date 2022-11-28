@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, CircularProgress, Grid } from "@mui/material";
 import SectionHeader from "../../../../common/components/SectionHeader";
 import BlogCard from "../../../../common/components/cards/BlogCard";
 // import { blogData } from "../../../../utils/sampleData";
 import { partitionList, sortListByDate } from "../../../../common/functions/listFunctions";
 import { useGetBlogListQuery } from "../../../../common/redux/apiSlices/blogApiSlice";
 
+const styles = {
+    spinner: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+}
 
 function BlogSection() {
 
     const blogData = useGetBlogListQuery();
-    const [blogMap, setBlogMap] = useState([]);
+    const [blogMap, setBlogMap] = useState();
 
     useEffect(() => {
-        if(blogData.data){
+        if (blogData.data) {
             const data = [...blogData.data];
-            let newList = sortListByDate(data, {date: 'desc'});
+            let newList = sortListByDate(data, { date: 'desc' });
             newList = partitionList(newList, 7)[0];
-    
+
             setBlogMap(initBlogMap(newList))
         }
     }, [blogData])
@@ -60,7 +67,12 @@ function BlogSection() {
                 subtitle="Read more about the latest updates of the project!"
             />
             <Grid container>
-                {blogMap}
+                {
+                    blogMap ? blogMap :
+                        <Grid item xs={12} sx={styles.spinner}>
+                            <CircularProgress color='secondary' />
+                        </Grid>
+                }
             </Grid>
         </Box>
     )

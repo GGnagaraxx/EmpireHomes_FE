@@ -51,6 +51,7 @@ function JoinUsSection() {
                         variant: 'contained',
                         onClick: handleJoinClick,
                         sx: {
+                            mt: 2,
                             minWidth: 250,
                             minHeight: 50,
                             fontSize: 'large',

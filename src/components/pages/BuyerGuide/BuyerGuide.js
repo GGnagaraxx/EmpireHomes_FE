@@ -35,9 +35,9 @@ function BuyerGuide() {
                     title="Buyers' Guide"
                     subtitle='Here are some instructions for our buyers.'
                 />
+                <ReservationSection/>
             </Box>
             <Stack>
-                <ReservationSection/>
                 <FaqsSection/>
             </Stack>
         </Box>

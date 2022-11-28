@@ -9,6 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeModalState } from "../../../../common/redux/slices/modalSlice";
 import { popNotification, pushNotification } from "../../../../common/redux/slices/notifSlice";
 import { changeGlobalFields } from "../../../../common/redux/slices/globalSearchSlice";
+import SelectCountry from "../../../../common/components/custom_fields/SelectCountry";
+import SelectState from "../../../../common/components/custom_fields/SelectState";
+import SelectCity from "../../../../common/components/custom_fields/SelectCity";
 
 
 function ReservationForm() {
@@ -129,6 +132,32 @@ function ReservationForm() {
             validate(e.target.value, name);
         }
     }
+    
+    function handleAutoCompleteChange(e, val) {
+        let id = e.target.id.split('-')[0];
+
+        if(val == ""){
+            if(id == "country"){
+                setFormInput({
+                    ...formInput,
+                    [id]: val,
+                    province: '',
+                    city: ''
+                })
+            } else if(id == "province"){
+                setFormInput({
+                    ...formInput,
+                    [id]: val,
+                    city: ''
+                })
+            }
+        } else {
+            setFormInput({
+                ...formInput,
+                [id]: val
+            })
+        }
+    }
 
     function handleSearchChange(e, val) {
         setFormInput({
@@ -240,38 +269,31 @@ function ReservationForm() {
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} md={4} lg={6}>
-                        <TextField
+                        <SelectCountry
                             required
-                            name='country'
-                            label='Country'
                             value={formInput.country}
-                            onChange={handleChange}
-                            error={inputError.country ? true : false}
-                            helperText={inputError.country ? inputError.country : ''}
+                            handleChange={handleAutoCompleteChange}
                             sx={{ width: '100%' }}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} md={4} lg={6}>
-                        <TextField
+                        <SelectState
                             required
-                            name='province'
-                            label='Province'
+                            disabled={!Boolean(formInput.country)}
                             value={formInput.province}
-                            onChange={handleChange}
-                            error={inputError.province ? true : false}
-                            helperText={inputError.province ? inputError.province : ''}
+                            country={formInput.country}
+                            handleChange={handleAutoCompleteChange}
                             sx={{ width: '100%' }}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} md={4} lg={6}>
-                        <TextField
+                        <SelectCity
                             required
-                            name='city'
-                            label='City'
+                            disabled={!Boolean(formInput.province)}
                             value={formInput.city}
-                            onChange={handleChange}
-                            error={inputError.city ? true : false}
-                            helperText={inputError.city ? inputError.city : ''}
+                            state={formInput.province}
+                            country={formInput.country}
+                            handleChange={handleAutoCompleteChange}
                             sx={{ width: '100%' }}
                         />
                     </Grid>

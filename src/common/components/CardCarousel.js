@@ -2,8 +2,15 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 
+const styles = {
+    spinner: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+}
 
 function CardCarousel(props) {
 
@@ -53,7 +60,7 @@ function CardCarousel(props) {
         autoPlaySpeed: 5000,
         autoPlay: !centerMode ? true : false,
         centerMode: centerMode ? true : false,
-        responsive: [
+        responsive: children ? [
             {
                 breakpoint: 1920,
                 settings: {
@@ -92,16 +99,19 @@ function CardCarousel(props) {
                     slidesToScroll: toScroll.xs,
                 }
             }
-        ]
+        ] : []
     };
 
 
     return (
         <div className="cust-carousel">
-        {!children ? <CircularProgress color='secondary' /> :
-            <Slider {...settings}>
-                {children}
-            </Slider>}
+            {!children ?
+                <Box sx={styles.spinner}>
+                    <CircularProgress color='secondary' />
+                </Box> :
+                <Slider {...settings}>
+                    {children}
+                </Slider>}
         </div>
     );
 }

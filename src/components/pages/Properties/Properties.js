@@ -6,7 +6,8 @@ import PropertyPagination from "./components/PropertyPagination";
 import FilterTab from "./components/FilterTab";
 import SortTab from "./components/SortTab";
 import SearchHeader from "./components/SearchHeader";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { changeGlobalFields } from "../../../common/redux/slices/globalSearchSlice";
 
 const styles = {
     header: {
@@ -29,6 +30,7 @@ const styles = {
 
 function Properties() {
 
+    const dispatch = useDispatch();
     const info = useSelector(state => state.globalSearch);
     const [openFilter, setOpenFilter] = useState(false);
     const [openSort, setOpenSort] = useState(false);
@@ -58,6 +60,10 @@ function Properties() {
                 type: globalType,
                 location: globalLoc
             })
+            dispatch(changeGlobalFields({
+                type: '',
+                location: ''
+            }))
         }
 
     }, [info])
