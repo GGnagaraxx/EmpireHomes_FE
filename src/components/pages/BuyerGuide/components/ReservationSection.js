@@ -57,7 +57,7 @@ function ReservationSection() {
                     title="Apply for a Reservation!"
                     subtitle={
                      <span>
-                        Planning on renting or buyin a unit in the future?
+                        Planning on renting or leasing a unit in the future?
                         Looking to buy a property? Apply for a reservation!</span>
                     }
                     center

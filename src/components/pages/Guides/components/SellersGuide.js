@@ -29,7 +29,7 @@ function SellersGuide() {
                 <Grid item xs={12} sx={styles.items}>
                     <SectionHeader
                         title="Sellers' Guide"
-                        subtitle="Read our offers and instructions for those who are interested on buying a property." />
+                        subtitle="Read the step by step instruction guide and the benefits of joining our team." />
                 </Grid>
                 <Grid item xs={12} sx={styles.items}>
                     <Link to='/seller-guide' style={{ textDecoration: 'none' }}>
